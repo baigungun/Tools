@@ -1,0 +1,79 @@
+Apache Maven是一个项目管理和理解工具，它基于项目对象模型(POM)的概念，它可以管理项目的构建、报告和文档。我们也会经常听到有人对Maven是这样理解的：
+
+  Maven是一个站点和文档工具。
+  Maven扩展Ant，让你下载依赖关系。
+  Maven是一组可重用的Ant脚本。
+
+这几个方面都是Maven的一些功能，Maven所提供的功能远比这强大的许多，不过对于我们在日常项目当中用到最多的就是管理第三方库的依赖、项目的构建。
+一个项目所有的配置都放在POM文件中：定义项目的类型、名字、管理依赖关系，定制插件的行为等等。
+在POM中，groupId、artifactId、packaging、version叫做maven坐标，它能唯一的确定一个项目。有了maven坐标，我们就可以用它来指定我们的项目
+所依赖的其他项目、插件、或者父项目。我写的demo很简单，但是比较大的项目一般会分成几个子项目，在这种情况下，每个子项目就会有自己的POM文件，它
+们会有一个共同的父项目。这样只要构建父项目就能够构建所有的子项目了。同时子项目的POM会继承父项目的POM。
+
+Maven库
+我们所依赖的库是从maven默认的远程库 (http://repo.maven.org/maven2) 下载的，这个是公有的库。有时公司自己封装了一些私有库，这个时候我们就
+可以搭建自己的私有库了。本地库是指maven下载了插件或者jar文件后存放在本地机器上的拷贝。在Mac上，它的位置在~/.m2/repository。当maven查找需
+要的jar文件时，它会先在本地库中查找，只有在找不到的情况下，才会去远程库中找的。由于maven默认的远程库服务器在国外，国内访问的时候比较慢，建议
+替换成阿里云的镜像，仓库地址如下：
+http://maven.aliyun.com/nexus/content/groups/public/
+总结
+Maven是一个项目管理和自动化构建工具，项目遵循约定优于配置，这也是maven项目的一大特色。另外，maven本质上是一个插件框架，它的核心不执行任何具体
+的构建工作，全部都交给插件去执行，maven插件是与maven生命周期绑定在一起的。理解这些重要的核心点，对于maven的使用会有很大的帮助。
+
+小demo中pom中配置如下：
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   
+  <!-- 模型版本号 -->
+  <modelVersion>4.0.0</modelVersion> 
+  <!-- 群组ID: 公司域名反写 -->
+  <groupId>com.kiwi</groupId>
+  <!-- 项目ID: 一个公司只有一个域名，但是可以有多个项目 -->
+  <artifactId>One</artifactId>
+  <!-- 版本号: 用于描述开发过程的阶段性标识-->
+  <version>0.0.1-SNAPSHOT</version>
+ 
+  <!-- 默认字符集 -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+ 
+ <!-- 依赖管理 -->
+  <dependencies>
+        <!-- 具体的依赖 -->
+        <dependency>
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+              <version>4.9</version>
+              <scope>test</scope>
+        </dependency>
+  </dependencies>
+</project>
+
+ Maven基本操作
+
+一些基本的操作，编译，构建，单元测试，安装，网站生成和基于Maven部署项目。
+
+    使用Maven构建项目
+    “mvn package” 来构建项目
+    使用Maven清理项目
+    “mvn clean” 来清理项目
+    使用Maven运行单元测试
+    “mvn test” 来执行单元测试
+    将项目安装到Maven本地资源库
+    “mvn install” 打包和部署项目到本地资源库
+    生成基于Maven的项目文档站点
+    “mvn site” 来为您的项目生成信息文档站点
+    使用“mvn site-deploy”部署站点（WebDAV例子）
+    “mvn site-deploy” 通过WebDAV部署自动生成的文档站点到服务器
+    部署基于Maven的war文件到Tomcat
+    “mvn tomcat:deploy” 以 WAR 文件部署到 Tomcat
+
+
+
+
+
+
+参考：
+链接：https://www.jianshu.com/p/39875424be3c
+來源：简书
